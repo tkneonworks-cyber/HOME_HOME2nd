@@ -1,0 +1,266 @@
+/* =========================
+   Variables
+========================= */
+:root{
+  --pink:#e5739f;
+  --mint:#a7e6de;
+  --blue:#1f4aa1;
+  --gray:#fafafa;
+  --black:#000;
+
+  --radius:16px;
+  --card-shadow:0 6px 18px rgba(0,0,0,.12);
+  --border:#e6e6e6;
+}
+
+/* =========================
+   Base (mobile-first)
+========================= */
+html{font-size:16px}
+body{margin:0;font-family:"Noto Sans JP",sans-serif;line-height:1.7;color:#222;background:#fff}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3{margin:0 0 .6rem}
+p{margin:.4rem 0}
+a{color:inherit}
+
+/* 選択不可（ヒーローロゴ周り用の補助） */
+.noselect, .noselect *{user-select:none;-webkit-user-select:none;caret-color:transparent}
+
+/* ユーティリティ */
+.is-hidden{display:none !important}
+
+/* =========================
+   Hero（テーマ切替対応）
+========================= */
+.hero{
+  position:relative;
+  text-align:center;
+  padding:28px 12px 20px; /* mobile圧縮 */
+}
+
+/* HOME = クール（青紫の色感あり） */
+.hero--home{
+  background: linear-gradient(180deg, #2a2d6c 0%, #3f3c88 70%, #5a4a9c 100%);
+}
+
+/* .2nd = かわいい（ミント×うっすらストライプ） */
+.hero--2nd{
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.10) 0 14px, transparent 14px 28px),
+    linear-gradient(180deg, #a7e6de 0%, #baf1eb 100%);
+}
+
+/* ロゴ切替（スマホ：小さめ横並び） */
+.brand-switch{
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.logo-option{
+  cursor:pointer;
+  text-align:center;
+  filter:grayscale(100%) opacity(.6);
+  transform:scale(1);
+  transition:transform .2s ease, filter .2s ease;
+}
+.logo-option.active{ filter:none; transform:scale(1.04) }
+
+.logo-card{
+  display:inline-block;
+  background:#fff;
+  padding:10px 12px;
+  border-radius:14px;
+  box-shadow:var(--card-shadow);
+}
+.logo-option img{ width:120px; height:auto }
+.logo-option span{
+  display:block;
+  margin-top:6px;
+  font-size:.8rem;
+  font-weight:700;
+  color:#fff; /* ヒーロー背景上で読むので白 */
+}
+/* テキスト選択/キャレット抑止 & spanはクリック透過 */
+.logo-option, .logo-option *{ user-select:none; -webkit-user-select:none; caret-color:transparent }
+.logo-option span{ pointer-events:none }
+
+/* ヒーロー直下SNS（スマホ：2列タイル） */
+.sns.hero-sns{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  max-width:520px;
+  margin:10px auto 0;
+  padding:0 8px;
+}
+.sns__link{
+  display:block;
+  text-decoration:none;
+  color:#fff;
+  padding:12px 0;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.95rem;
+  text-align:center;
+  transition:opacity .15s ease, transform .02s ease;
+}
+.sns__link:active{ transform:translateY(1px) }
+.sns__link.x{ background:#000 }
+.sns__link.insta{ background:#e1306c }
+.sns__link.poke{ background:#5b77d1 }
+
+/* =========================
+   Sections
+========================= */
+.shop-section{
+  display:none;
+  padding:20px 14px;
+  border-top:1px solid #eee;
+}
+.shop-section.active{ display:block }
+.lead{ font-size:1rem; margin:.5rem 0 1rem }
+
+/* 見出し（店舗別カラー） */
+#home h2{
+  color:#111;
+  border-left:6px solid var(--pink);
+  padding-left:10px;
+}
+
+/* idが数値始まりだと環境で解釈差が出るので両方書く */
+[id="2nd"] h2{
+  color: var(--blue);
+  border-left: 6px solid var(--pink);
+  padding-left: 10px;
+}
+
+/* 概要リスト */
+.overview ul{ padding-left:1.1rem; margin:.4rem 0 }
+.overview li{ margin:.2rem 0 }
+
+/* =========================
+   Cast
+========================= */
+.cast{ margin-top:.6rem }
+.cast-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.cast-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.cast-card img{
+  border-radius:10px;
+  margin-bottom:8px;
+  width:100%;
+  height:auto;
+}
+.cast-card h4{ margin:6px 0 4px; font-size:1rem }
+.cast-card p{ font-size:.92rem; color:#555 }
+
+/* もっと見る（最初はhiddenで非表示。JSで必要時のみ表示） */
+.cast-more[hidden]{ display:none !important; }
+.cast-more{
+  margin:10px auto 0;
+  display:block;
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid #ddd;
+  background:#fff;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .15s ease, transform .02s ease;
+}
+.cast-more:hover{ background:#fafafa }
+.cast-more:active{ transform:translateY(1px) }
+
+/* =========================
+   Gallery
+========================= */
+.gallery{ margin-top:.8rem }
+.gallery-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
+.gallery-item{
+  border-radius:10px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.gallery-item img{
+  display:block;
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+.gallery-item figcaption{
+  padding:8px 10px;
+  font-size:.9rem;
+  color:#555;
+}
+
+/* =========================
+   Map
+========================= */
+.map-embed{
+  margin-top:12px;
+  border-radius:12px;
+  overflow:hidden;
+}
+.map-embed iframe{
+  width:100%;
+  height:240px;
+  border:0;
+}
+
+/* =========================
+   Footer
+========================= */
+.footer{
+  text-align:center;
+  padding:18px 12px;
+  background:#f5f5f5;
+  font-size:.9rem;
+  color:#666;
+}
+
+/* =========================
+   Desktop Enhancements
+========================= */
+@media (min-width:768px){
+  .hero{ padding:68px 20px 56px }
+  .brand-switch{ gap:28px; margin-bottom:14px }
+  .logo-card{ padding:16px 20px; border-radius:var(--radius) }
+  .logo-option img{ width:clamp(140px,18vw,220px) }
+  .logo-option span{ font-size:.9rem }
+
+  /* PCではSNSを横並び3つ */
+  .sns.hero-sns{ display:flex; justify-content:center; gap:14px; max-width:none; padding:0 }
+  .sns__link{ padding:10px 18px }
+
+  .shop-section{ max-width:1000px; margin:auto; padding:40px 20px }
+  .lead{ font-size:1.1rem }
+
+  .cast-grid{ grid-template-columns:repeat(3,1fr); gap:20px }
+  .gallery-grid{ grid-template-columns:repeat(3,1fr); gap:12px }
+  .gallery-item img{ height:200px }
+  .map-embed iframe{ height:300px }
+}
+
+@media (min-width:1100px){
+  .cast-grid{ grid-template-columns:repeat(4,1fr) }
+  .gallery-grid{ grid-template-columns:repeat(4,1fr) }
+}

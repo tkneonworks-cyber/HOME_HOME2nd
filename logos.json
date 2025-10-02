@@ -1,0 +1,12 @@
+{
+  "home": {
+    "name": "BAR HOME",
+    "img": "images/logo-home.png",
+    "alt": "BAR HOME ロゴ"
+  },
+  "2nd": {
+    "name": ".2nd HOME",
+    "img": "images/logo-2nd.png",
+    "alt": ".2nd HOME ロゴ"
+  }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BAR HOME / .2nd HOME | 広島・流川</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+
+  <!-- ヒーロー -->
+  <header class="hero hero--2nd"> <!-- ← 初期は2ndテーマ -->
+    <div class="brand-switch">
+      <div class="logo-option" data-target="home">
+        <div class="logo-card">
+          <img src="images/no-image.png" alt="BAR HOME ロゴ">
+        </div>
+        <span>HOME</span>
+      </div>
+      <div class="logo-option active" data-target="2nd">
+        <div class="logo-card">
+          <img src="images/no-image.png" alt=".2nd HOME ロゴ">
+        </div>
+        <span>.2nd HOME</span>
+      </div>
+    </div>
+
+    <!-- 店舗別SNS（切替連動のまま） -->
+    <div class="sns hero-sns hero-sns--home is-hidden">
+      <a class="sns__link insta" href="https://www.instagram.com/bar_home1001" target="_blank" rel="noopener">Instagram（HOME）</a>
+      <a class="sns__link x" href="https://x.com/yukorin_barhome" target="_blank" rel="noopener">X(共通)</a>
+    </div>
+    <div class="sns hero-sns hero-sns--2nd">
+      <a class="sns__link insta" href="https://www.instagram.com/（2nd専用アカ）" target="_blank" rel="noopener">Instagram（.2nd）</a>
+      <a class="sns__link x" href="https://x.com/yukorin_barhome" target="_blank" rel="noopener">X(共通)</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="shop-section">
+      <h2>BAR HOME</h2>
+      <p class="lead">カウンター8席、カラオケ歌い放題。明るくノリの良いスタッフが魅力！</p>
+
+      <!-- 概要 -->
+      <div class="overview">
+        <h3>店舗概要</h3>
+        <ul>
+          <li>住所：広島市中区新天地1-27 堀川ビル2F（仏壇通り沿い）</li>
+          <li>席数：カウンター8席</li>
+          <li>営業時間：20:00〜LAST</li>
+          <li>定休日：不定休(Instagramにてお知らせ)</li>
+        </ul>
+      </div>
+
+      <!-- 料金システム -->
+      <div class="system">
+        <h3>料金システム</h3>
+        <ul>
+          <li>90分飲み放題（男性）：3,000円</li>
+          <li>90分飲み放題（女性）：2,500円</li>
+          <li>延長60分：1,000円</li>
+          <li>カラオケ歌い放題無料</li>
+        </ul>
+      </div>
+
+      <!-- キャスト -->
+      <div class="cast">
+        <h3>メインキャスト</h3>
+        <div class="cast-grid" id="home-cast"></div>
+        <button class="cast-more" data-shop="home" hidden>もっと見る</button>
+      </div>
+
+      <!-- 店内写真 -->
+      <div class="gallery">
+        <h3>店内写真</h3>
+        <div class="gallery-grid" id="home-gallery"></div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps?q=広島県広島市中区新天地1-27&output=embed"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- .2nd HOME -->
+    <section id="2nd" class="shop-section active">
+      <h2>.2nd HOME</h2>
+      <p class="lead">カウンター10席、カラオケ歌い放題。可愛い内装とアットホーム感が魅力。</p>
+
+      <!-- 概要 -->
+      <div class="overview">
+        <h3>店舗概要</h3>
+        <ul>
+          <li>住所：広島市中区流川町4-16 フレイアビル3F（新天地公園すぐ）</li>
+          <li>席数：カウンター10席</li>
+          <li>営業時間：20:00〜LAST</li>
+          <li>定休日：日曜祝日(祝前日の日曜は営業、GWや年末年始等はInstagramにてお知らせ)</li>
+        </ul>
+      </div>
+
+      <!-- 料金システム -->
+      <div class="system">
+        <h3>料金システム</h3>
+        <ul>
+          <li>90分飲み放題（男性）：3,000円</li>
+          <li>90分飲み放題（女性）：2,500円</li>
+          <li>延長60分：1,000円</li>
+          <li>カラオケ歌い放題無料</li>
+        </ul>
+      </div>
+
+      <!-- キャスト -->
+      <div class="cast">
+        <h3>メインキャスト</h3>
+        <div class="cast-grid" id="2nd-cast"></div>
+        <button class="cast-more" data-shop="2nd" hidden>もっと見る</button>
+      </div>
+
+      <!-- 店内写真 -->
+      <div class="gallery">
+        <h3>店内写真</h3>
+        <div class="gallery-grid" id="2nd-gallery"></div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps?q=広島県広島市中区流川町4-16&output=embed"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; BAR HOME / .2nd HOME | 広島・流川</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
