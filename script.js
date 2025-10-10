@@ -52,7 +52,6 @@ async function loadGallery(shop,jsonPath,containerId){
       <figure class="gallery-item">
         <img src="${g.src}" alt="${g.alt}" loading="lazy"
              onerror="this.onerror=null;this.src='images/default-shop.png';">
-        ${g.alt?`<figcaption>${g.alt}</figcaption>`:""}
       </figure>
     `).join("");
   }catch(e){console.error(`ギャラリー読み込み失敗(${shop}):`,e);}
