@@ -264,3 +264,30 @@ a{color:inherit}
   .cast-grid{ grid-template-columns:repeat(4,1fr) }
   .gallery-grid{ grid-template-columns:repeat(4,1fr) }
 }
+
+/* ========== 店内写真ギャラリー ========== */
+#shop-photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* 写真同士の間隔 */
+  margin-top: 1.5rem;
+}
+
+#shop-photos .gallery-item {
+  width: 100%;
+  max-width: 800px; /* ←ここを調整すれば写真サイズを変更できる */
+}
+
+#shop-photos .gallery-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* キャプション非表示（もう不要なため） */
+#shop-photos .gallery-item figcaption {
+  display: none;
+}
