@@ -1,14 +1,17 @@
 [
   {
-    "name": "名前入力欄",
-    "age": 0,
-    "comment": "コメント入力欄",
-    "img": "images/no-image.png"
+    "name": "なっち",
+    "comment": "めっちゃホリデー！！！",
+    "img": "images/cast_natti.png"
   },
   {
-    "name": "名前入力欄",
-    "age": 0,
-    "comment": "コメント入力欄",
-    "img": "images/no-image.png"
+    "name": "はるか",
+    "comment": "一緒にいっぱい飲むちゃむ♡",
+    "img": "images/cast_haruka.png"
+  },
+  {
+    "name": "さとし",
+    "comment": "美容師もやってます！力欄",
+    "img": "images/cast_satosh.png"
   }
 ]

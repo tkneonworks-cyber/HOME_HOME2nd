@@ -1,14 +1,12 @@
 [
   {
-    "name": "名前入力欄",
-    "age": 0,
-    "comment": "コメント入力欄",
-    "img": "images/no-image.png"
+    "name": "ゆうこりん",
+    "comment": "刈り上げマネージャー(＾ω＾)",
+    "img": "images/cast_yuko.png"
   },
   {
-    "name": "名前入力欄",
-    "age": 0,
-    "comment": "コメント入力欄",
-    "img": "images/no-image.png"
+    "name": "楓",
+    "comment": "カラオケ得意です！一緒に歌いましょう！",
+    "img": "images/cast_kaede.png"
   }
 ]
