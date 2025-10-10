@@ -113,7 +113,6 @@ function renderCastSlice(shop, from, to){
       <img src="${c.img}" alt="${escapeHtml(c.name)}" loading="lazy"
            onerror="this.onerror=null;this.src='images/default-avatar.png';">
       <h4>${escapeHtml(c.name)}</h4>
-      <p>${escapeHtml(c.comment)}</p>
     </div>
   `).join(""));
 
