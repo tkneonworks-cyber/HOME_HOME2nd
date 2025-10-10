@@ -158,11 +158,11 @@ a{color:inherit}
   text-align:center;
   box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
-.cast-card img{
-  border-radius:10px;
-  margin-bottom:8px;
-  width:100%;
-  height:auto;
+.cast-card img {
+  width: 100%;
+  height: 300px; /* 好きな高さに統一 */
+  object-fit: cover; /* 画像を枠いっぱいにトリミング */
+  border-radius: 10px;
 }
 .cast-card h4{ margin:6px 0 4px; font-size:1rem }
 .cast-card p{ font-size:.92rem; color:#555 }
