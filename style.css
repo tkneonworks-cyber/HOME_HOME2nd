@@ -291,3 +291,13 @@ a{color:inherit}
 #shop-photos .gallery-item figcaption {
   display: none;
 }
+
+.gallery-grid { display:block; }
+.gallery-grid .featured {margin:0;}
+.gallery-grid .featured img {
+  width:100%;
+  height:auto;
+  aspect-ratio: 16/9; /* ここで縦横比調整 */
+  object-fit: cover;
+  border-radius: 16px;
+}

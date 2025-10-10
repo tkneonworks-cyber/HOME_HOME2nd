@@ -43,19 +43,33 @@ async function loadLogos(){
 }
 
 /* ========== ギャラリー ========== */
-async function loadGallery(shop,jsonPath,containerId){
+async function loadGallery(shop, jsonPath, containerId){
   try{
     const res = await fetch(jsonPath,{cache:"no-cache"});
     const data = await res.json();
     const container = document.getElementById(containerId);
-    container.innerHTML = data.map(g=>`
-      <figure class="gallery-item">
-        <img src="${g.src}" alt="${g.alt}" loading="lazy"
+
+    // 画像が1枚もない場合のフォールバック
+    if(!data || data.length === 0){
+      container.innerHTML = `
+        <figure class="featured">
+          <img src="images/default-shop.png" alt="${shop} 店内写真" loading="lazy">
+        </figure>`;
+      return;
+    }
+
+    // 先頭の1枚だけを大きく表示
+    const g = data[0];
+    container.innerHTML = `
+      <figure class="featured">
+        <img src="${g.src}" alt="${g.alt ?? shop}" loading="lazy"
              onerror="this.onerror=null;this.src='images/default-shop.png';">
-      </figure>
-    `).join("");
-  }catch(e){console.error(`ギャラリー読み込み失敗(${shop}):`,e);}
+      </figure>`;
+  }catch(e){
+    console.error(`ギャラリー読み込み失敗(${shop}):`, e);
+  }
 }
+
 
 /* ========== キャスト（初期2人＋店ごとボタン制御） ========== */
 const CAST_INITIAL = 2;
@@ -130,5 +144,3 @@ function escapeHtml(s){
   ));
 }
 
-/* ========== （旧）loadCast は削除！ 二重描画の原因になる ========== */
-// async function loadCast(...) { ... }  ← これを消す
