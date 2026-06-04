@@ -301,3 +301,23 @@ a{color:inherit}
   object-fit: cover;
   border-radius: 16px;
 }
+
+.game-link {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.game-link a {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: #f5c542;
+  color: #111;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,.2);
+}
+
+.game-link a:hover {
+  opacity: 0.9;
+}

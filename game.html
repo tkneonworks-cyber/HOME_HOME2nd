@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HOME Derby | BAR HOME</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", sans-serif;
+      background: linear-gradient(180deg, #111, #222);
+      color: #fff;
+      text-align: center;
+    }
+
+    .game {
+      max-width: 760px;
+      margin: auto;
+      padding: 24px 14px;
+    }
+
+    .bet-area {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+    }
+
+    .player-btn,
+    .bet-btn,
+    .start-btn,
+    .reset-btn {
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .player-btn {
+      background: #444;
+      color: #fff;
+    }
+
+    .player-btn.active {
+      outline: 3px solid #fff;
+    }
+
+    .p1 { background: #e53935 !important; color: #fff; }
+    .p2 { background: #1e88e5 !important; color: #fff; }
+    .p3 { background: #43a047 !important; color: #fff; }
+    .p4 { background: #fdd835 !important; color: #111; }
+
+    .bet-btn {
+      background: #fff;
+      color: #111;
+      min-height: 72px;
+    }
+
+    .bet-btn.locked {
+      opacity: .95;
+    }
+
+    .track {
+      background: #333;
+      border-radius: 16px;
+      padding: 14px;
+      margin: 18px 0;
+    }
+
+    .lane {
+      position: relative;
+      height: 48px;
+      background: #555;
+      border-radius: 999px;
+      margin: 12px 0;
+      overflow: hidden;
+    }
+
+    .runner {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: left 0.25s linear;
+    }
+
+    .goal {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
+    }
+
+    .start-btn {
+      background: #e5739f;
+      color: #fff;
+      font-size: 1.1rem;
+      padding: 14px 28px;
+    }
+
+    .start-btn:disabled {
+      background: #777;
+      cursor: not-allowed;
+    }
+
+    .reset-btn {
+      background: #fff;
+      color: #111;
+      margin-left: 8px;
+    }
+
+    .status,
+    .result {
+      min-height: 36px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    .note {
+      margin-top: 18px;
+      color: #bbb;
+      font-size: .9rem;
+    }
+
+    .event-log {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #111;
+      border: 1px solid #555;
+      color: #fff;
+      font-weight: bold;
+      min-height: 28px;
+      transition: transform 0.25s ease;
+    }
+
+    .back-btn {
+      display:inline-block;
+      margin-top:20px;
+      padding:12px 20px;
+      background:#444;
+      color:#fff;
+      text-decoration:none;
+      border-radius:999px;
+    }
+
+    a { color: #fff; }
+
+    @media (max-width: 520px) {
+      .bet-area {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>HOME Derby</h1>
+    <p>1〜4人で予想。掛け先の重複は不可。</p>
+
+    <div class="status" id="status">P1の掛け先を選択</div>
+
+    <div class="bet-area">
+      <button class="bet-btn" data-horse="0">タスカランヒト<br><span></span></button>
+      <button class="bet-btn" data-horse="1">トウシツストライク<br><span></span></button>
+      <button class="bet-btn" data-horse="2">メッチャホリデー<br><span></span></button>
+      <button class="bet-btn" data-horse="3">アキカエデ<br><span></span></button>
+    </div>
+
+    <div class="track">
+      <div class="lane"><div class="runner" id="r0">タ</div><div class="goal">🏁</div></div>
+      <div class="lane"><div class="runner" id="r1">ト</div><div class="goal">🏁</div></div>
+      <div class="lane"><div class="runner" id="r2">メ</div><div class="goal">🏁</div></div>
+      <div class="lane"><div class="runner" id="r3">ア</div><div class="goal">🏁</div></div>
+    </div>
+
+    <button class="start-btn" id="startBtn" disabled>START</button>
+    <button class="reset-btn" id="resetBtn">RESET</button>
+
+    <div class="event-log" id="eventLog">実況：スタート待機中</div>
+    <div class="result" id="result"></div>
+
+    <p class="note">※馬の名前は競馬風に発音してください</p>
+    <a class="back-btn" href="index.html">← BAR HOMEへ戻る</a>
+  </div>
+
+<script>
+  const names = ["タスカランヒト", "トウシツストライク", "メッチャホリデー", "アキカエデ"];
+  const playerClasses = ["p1", "p2", "p3", "p4"];
+  const playerNames = ["P1", "P2", "P3", "P4"];
+
+  const runners = ["r0", "r1", "r2", "r3"].map(id => document.getElementById(id));
+  const bets = [null, null, null, null];
+
+  let running = false;
+
+  const startBtn = document.getElementById("startBtn");
+  const result = document.getElementById("result");
+  const eventLog = document.getElementById("eventLog");
+  const status = document.getElementById("status");
+
+  const eventMessages = [
+    { text: "🔥 {name}が一気に加速！", effect: "boost" },
+    { text: "💨 {name}が頑張っている！", effect: "boost" },
+    { text: "😵 {name}が転んでしまった…", effect: "slow" },
+    { text: "🍻 {name}、まさかの酒を飲み始めた！", effect: "slow" },
+    { text: "⚡ {name}が謎の覚醒！", effect: "bigBoost" },
+    { text: "🎤 {name}、歌いながら爆走！", effect: "bigBoost" }
+  ];
+
+  let eventBonus = [0, 0, 0, 0];
+
+  function getBetCount() {
+    return bets.filter(b => b !== null).length;
+  }
+
+  function updateView() {
+    document.querySelectorAll(".bet-btn").forEach(btn => {
+      const horse = Number(btn.dataset.horse);
+      const owner = bets[horse];
+      const span = btn.querySelector("span");
+
+      btn.className = "bet-btn";
+
+      if (owner !== null) {
+        btn.classList.add("locked", playerClasses[owner]);
+        span.textContent = playerNames[owner];
+      } else {
+        span.textContent = "";
+      }
+    });
+
+    const betCount = getBetCount();
+    startBtn.disabled = betCount < 1 || running;
+
+    status.textContent = betCount >= 4
+      ? "4人分選択済み。STARTできます"
+      : `次は${playerNames[betCount]}の掛け先を選択`;
+  }
+
+  function triggerEvent(finished) {
+    const activeHorses = [0, 1, 2, 3].filter(horse => !finished.includes(horse));
+
+    if (activeHorses.length === 0) return;
+
+    const horse = activeHorses[Math.floor(Math.random() * activeHorses.length)];
+    const event = eventMessages[Math.floor(Math.random() * eventMessages.length)];
+
+    if (event.effect === "boost") eventBonus[horse] += 5 + Math.random() * 5;
+    if (event.effect === "bigBoost") eventBonus[horse] += 7 + Math.random() * 7;
+    if (event.effect === "slow") eventBonus[horse] -= 4 + Math.random() * 5;
+
+    eventLog.textContent = event.text.replace("{name}", names[horse]);
+    eventLog.style.transform = "scale(1.08)";
+
+    setTimeout(() => {
+      eventLog.style.transform = "scale(1)";
+    }, 250);
+  }
+
+  document.querySelectorAll(".bet-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (running) return;
+
+      const horse = Number(btn.dataset.horse);
+
+      if (bets[horse] !== null) {
+        bets[horse] = null;
+        result.textContent = "";
+        updateView();
+        return;
+      }
+
+      const usedPlayers = bets.filter(b => b !== null);
+      const nextPlayer = [0, 1, 2, 3].find(p => !usedPlayers.includes(p));
+
+      if (nextPlayer === undefined) {
+        result.textContent = "これ以上は選択できません";
+        return;
+      }
+
+      bets[horse] = nextPlayer;
+      result.textContent = "";
+      updateView();
+    });
+  });
+
+  startBtn.addEventListener("click", () => {
+    if (running || getBetCount() < 1) return;
+
+    running = true;
+    result.textContent = "レース中...";
+    eventLog.textContent = "実況：各馬一斉にスタート！";
+    updateView();
+
+    let positions = [0, 0, 0, 0];
+    let finished = [];
+    let tick = 0;
+    let nextEventTick = Math.floor(Math.random() * 2) + 4;
+
+    eventBonus = [0, 0, 0, 0];
+
+    runners.forEach(r => {
+      r.style.left = "0%";
+    });
+
+    const interval = setInterval(() => {
+      tick++;
+
+      if (tick >= nextEventTick && finished.length < 3) {
+        triggerEvent(finished);
+        nextEventTick += Math.floor(Math.random() * 6) + 5;
+      }
+
+      positions = positions.map((p, i) => {
+        if (finished.includes(i)) return p;
+
+        const baseSpeed = 1.5 + Math.random() * 3.0;
+        const bonus = eventBonus[i];
+
+        eventBonus[i] *= 0.55;
+
+        return Math.max(0, Math.min(p + baseSpeed + bonus, 88));
+      });
+
+      runners.forEach((r, i) => {
+        r.style.left = positions[i] + "%";
+      });
+
+      positions.forEach((pos, horse) => {
+        if (pos >= 88 && !finished.includes(horse)) {
+          finished.push(horse);
+          eventLog.textContent = `実況：${finished.length}着入線！ ${names[horse]}`;
+        }
+      });
+
+      if (finished.length >= 4) {
+        clearInterval(interval);
+        running = false;
+
+        const medals = ["🥇", "🥈", "🥉", "4着"];
+
+        result.innerHTML = finished.map((horse, i) => {
+          const player = bets[horse];
+          const playerText = player !== null ? `（${playerNames[player]}）` : "";
+          return `${medals[i]} ${names[horse]} ${playerText}`;
+        }).join("<br>");
+
+        eventLog.textContent = "実況：全員ゴール！結果確定！";
+        updateView();
+      }
+    }, 450);
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    if (running) return;
+
+    eventLog.textContent = "実況：スタート待機中";
+    bets.fill(null);
+    result.textContent = "";
+
+    runners.forEach(r => r.style.left = "0%");
+
+    updateView();
+  });
+
+  updateView();
+</script>
+</body>
+</html>
